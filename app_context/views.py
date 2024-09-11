@@ -129,11 +129,11 @@ def processing(request, task_id):
     # import pdb;pdb.set_trace()
     data = process_files(temp_dir, task_id)
     # return render(request, 'app_context/processingpage.html')
-    return redirect('processong_successful')
+    return redirect('processong_successful', task_id=task_id)
 
 @csrf_exempt
-def processingsuccessful(request):
-    return render(request, 'app_context/processing_successful.html')
+def processingsuccessful(request,task_id):
+    return render(request, 'app_context/processing_successful.html', {'task_id': task_id})
 
 def merger(request):
     return render(request, 'app_context/mergerpage.html')
