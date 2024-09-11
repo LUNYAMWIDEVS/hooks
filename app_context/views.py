@@ -145,7 +145,8 @@ def downloadall(request):
     try:
         # Get the task ID from the request
         post_data = request.POST.copy()
-        task_id = post_data.get('task_id')
+        task_id = post_data.get('task_id') 
+        
         if not task_id:
             return JsonResponse({"error": "Task ID is required"}, status=400)
             # messages.error(request, 'Task ID is required')
