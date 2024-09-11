@@ -1,0 +1,8 @@
+<!-- policy.xml -->
+<policymap>
+  <policy domain="resource" name="temporary-path" value="/tmp"/>
+  <policy domain="path" rights="read|write" pattern="@*"/>
+  <policy domain="coder" rights="read|write" pattern="PDF"/>
+  <policy domain="coder" rights="read|write" pattern="PS"/>
+  <policy domain="coder" rights="read|write" pattern="XPS"/>
+</policymap>

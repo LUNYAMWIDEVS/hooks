@@ -1,0 +1,53 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "header.css";
+@import "hero.css";
+@import "work.css";
+@import "whyUs.css";
+@import "hooks.css";
+@import "menu.css";
+@import "about.css";
+@import "plan.css";
+@import "contact.css";
+@import "footer.css";
+@import "haveDone.css";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.home-root{
+    width: 100%;
+    min-height: 100vh;
+}
+
+input {
+    outline: none;
+}
+
+.body-hidden {
+    visibility: hidden;
+}
+
+@media screen and (max-width: 391px) {
+    body {
+        zoom: 95%;
+    }
+}
+@media screen and (max-width: 371px) {
+    body {
+        zoom: 90%;
+    }
+}
+@media screen and (max-width: 351px) {
+    body {
+        zoom: 85%;
+    }
+}
+@media screen and (max-width: 332px) {
+    body {
+        zoom: 81.8%;
+    }
+}

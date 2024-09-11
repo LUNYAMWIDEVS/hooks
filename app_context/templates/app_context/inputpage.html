@@ -1,0 +1,157 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Input Page</title>
+  <link href="{% static 'assets/css/InputPage.css' %}" rel="stylesheet">
+  <style>
+    .alert {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+  }
+  .alert-danger {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+  }
+  .alert-success {
+      color: #3c763d;
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+  }
+  
+  </style>
+</head>
+<body>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+          <li class="alert {% if message.tags %}{{ message.tags }}{% else %}alert-info{% endif %}">
+              {{ message }}
+          </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div id="root">
+      <div class="input-root">
+        <header>
+          <img src="{% static 'assets/img/white_logo.svg' %}" alt="logo" style="cursor: pointer;">
+          <div class="account">
+            <h5>Credits Remaining: 10</h5>
+            <div class="user" id="menuButton"><img src="{% static 'assets/img/user.svg' %}" alt="user" id="user"></div>
+          </div>
+        </header>
+        <div class="menu" id="menu" style="display: none;">
+          <ul>
+            <li class="name">Olivia Rhye</li>
+            <li class="email">olivia @example.com</li>
+            <li>View profile</li>
+            <li>Credit left <span>50</span></li>
+            <li>Setting</li>
+            <li><a href="{% url 'logout' %}">Log out</a></li>
+          </ul>
+        </div>
+        <div class="content">
+            <div class="block_a">
+                <h1>Upload and customize</h1>
+                <div class="box">
+                  <div class="upload_file_wrapper">
+                    <h4>Hooks Content:</h4>
+                    <label for="hooks"><img src="{% static 'assets/img/upload_large.svg' %}" alt="upload"><span class="button"><span>Click to upload</span> or drag and drop</span><span class="selected_file selected_video">No file chosen</span></label><input id="hooks" type="file" name="hooks_content" accept="video/mp4,video/x-m4v,video/*" multiple="">
+                  </div>
+                  <div class="wrapper"><label for="google_link">Google Sheets Link:</label><input type="text" name="google_sheets_link" id="google_link" placeholder="Paste URL Link" value=""></div>
+                  <div class="wrapper"><label for="api_key">Eleven Labs API Key:</label><input type="text" name="eleven_labs_api_key" id="api_key" placeholder="Paste API Key" value=""></div>
+                  <div class="wrapper"><label for="voice_id">Voice ID:</label><input type="text" name="voice_id" id="voice_id" placeholder="Enter Voice ID" value=""></div>
+                </div>
+                <h2>Customize your hook design</h2>
+                <div class="box">
+                  <div class="color-picker-container">
+                    <label for="box_color">Main Box Color (Hex):</label>
+                    <div class="color-input-wrapper"><input type="color" name="main_box_color" id="box_color" class="color-input" value="#485AFF"><span class="color-value">#485AFF</span></div>
+                  </div>
+                  <div class="color-picker-container">
+                    <label for="fontColor">Font Color (Hex):</label>
+                    <div class="color-input-wrapper"><input type="color" name="font_color" id="fontColor" class="color-input" value="#FFFFFF"><span class="color-value">#FFFFFF</span></div>
+                  </div>
+                </div>
+                <button>Create<img src="{% static 'assets/img/arrow_right_dark.svg' %}" alt="arrow"></button>
+              
+            </div>
+            <div class="block_b">
+              <h1>Tutorial</h1>
+              <div class="display tutorial"><img class="play" src="{% static 'assets/img/play.svg' %}" alt="play"></div>
+              <hr>
+              <h1>Preview</h1>
+              <div class="display preview">
+                <div class="head" id="textbg" style="background: rgb(72, 90, 255);">
+                  <h1 id="text" style="color: rgb(255, 255, 255);">This Is How Your Hook Text Will Look Like On The Video</h1>
+                </div>
+                <div class="info">
+                  <h2>your hooks content will go here</h2>
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </form>
+
+  <script>
+    document.getElementById("menuButton").addEventListener("click", function() {
+        var menu = document.getElementById("menu");
+        if (menu.style.display === "none") {
+            menu.style.display = "block";
+        } else {
+            menu.style.display = "none";
+        }
+    });
+  </script>
+  
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById('menu');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+    
+    function handleDragOver(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      document.getElementById('upload-label').style.borderColor = '#485AFF';
+    }
+    
+    function handleDrop(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      const files = Array.from(event.dataTransfer.files);
+      document.getElementById('selected_file').textContent = files.length > 1 ? 
+        `${files.length} files uploaded` : 
+        files[0].name;
+      document.getElementById('upload-label').style.borderColor = '';
+    }
+    
+    function handleDragLeave(event) {
+      event.preventDefault();
+      event.stopPropagation();
+      document.getElementById('upload-label').style.borderColor = '';
+    }
+    
+    function handleFileUpload(event) {
+      const files = Array.from(event.target.files);
+      document.getElementById('selected_file').textContent = files.length > 1 ? 
+        `${files.length} files uploaded` : 
+        files[0].name;
+    }
+    
+    function handleCreate() {
+      // Implement the logic for form submission here
+      alert('Form submitted!');
+    }
+  </script>
+</body>
+</html>

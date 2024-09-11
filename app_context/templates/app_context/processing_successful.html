@@ -1,0 +1,49 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processing Successful</title>
+    <link href="{% static 'assets/css/main.8ac7ceda.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="root">
+        <div class="process-done-root">
+            <header>
+                <img src="{% static 'assets/img/white_logo.svg' %}" alt="logo" style="cursor: pointer;">
+                <div class="account">
+                    <h5>Credits Remaining: 10</h5>
+                    <div class="user" id="menuButton"><img src="{% static 'assets/img/user.svg' %}"  alt="user"></div>
+                </div>
+            </header>
+            <div class="menu" style="display: none;">
+                <ul>
+                    <li class="name">Olivia Rhye</li>
+                    <li class="email">olivia @example.com</li>
+                    <li>View profile</li>
+                    <li>Credit left <span>50</span></li>
+                    <li>Setting</li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="success_block">
+                    <div class="head">
+                        <img src="{% static 'assets/img/arrow_left.svg' %}"  alt="arrow">
+                        <h5>Success</h5>
+                    </div>
+                    <ul class="info_block">
+                        <li>Processing Completed</li>
+                    </ul>
+                    <a href="{% url "download_all" task_id %}">
+
+                        <button>Download All as Zip</button>
+                    </a>
+                    <a href="/merger" id="merger">Go to merger</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

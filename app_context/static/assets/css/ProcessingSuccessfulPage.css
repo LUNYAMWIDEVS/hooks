@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.process-done-root {
+    width: 100%;
+    min-height: 100vh;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(122, 135, 255, 0.06) 88%, rgba(72, 90, 255, 0) 100%);
+}
+
+.process-done-root > header {
+    width: 100%;
+    height: 53px;
+    padding: 0 72px;
+    background: #191919;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.process-done-root > header > img {
+    width: 162px;
+    height: 23px;
+    object-fit: contain;
+}
+
+.process-done-root > header > .account {
+    display: flex;
+    align-items: center;
+}
+
+.process-done-root > header > .account > h5 {
+    font-family: Montserrat, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    line-height: 11px;
+    text-align: left;
+    padding-right: 10px;
+    margin-right: 10px;
+    border-right: 1px solid #FFFFFFB2;
+    color: #FFFFFF;
+}
+
+.process-done-root > header > .account > .user {
+    cursor: pointer;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    background: #C4C4C4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.process-done-root > .menu {
+    /*padding: 12px 9px;*/
+    position: absolute;
+    width: 222px;
+    /*height: 232px;*/
+    border-radius: 5px;
+    top: 74px;
+    right: 72px;
+    z-index: 5;
+    box-shadow: 0 4px 4px -4px #0C0C0D0D, 0 16px 32px -4px #0C0C0D1A;
+    background: #FFFFFF;
+    display: none;
+}
+
+.process-done-root > .menu > ul {
+    list-style-type: none;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.process-done-root > .menu > ul li {
+    cursor: pointer;
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    text-align: left;
+    color: #191919;
+    padding: 12px 9px;
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.process-done-root > .menu > ul > .name{
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 20px;
+}
+
+.process-done-root > .menu > ul > .email{
+    color: #191919B2;
+    border-bottom: 1px solid #19191933;
+}
+
+.process-done-root > .menu > ul li:last-child{
+    border-top: 1px solid #19191933;
+}
+
+
+.process-done-root > .content {
+    padding-top: 80px;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+
+.process-done-root > .content > .success_block {
+    width: 364px;
+    height: 364px;
+    padding: 32px;
+    border: 1px solid #0000004D;
+    border-radius: 10px;
+    background: #FFFFFF;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.process-done-root > .content > .success_block > .head {
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.process-done-root > .content > .success_block > .head > img {
+    cursor: pointer;
+    width: 21px;
+    height: 21px;
+    margin-right: 21px;
+    object-fit: contain;
+}
+
+.process-done-root > .content > .success_block > .head > h5 {
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 21px;
+    font-weight: 700;
+    line-height: 27px;
+    text-align: left;
+    color: #485AFF;
+}
+
+.process-done-root > .content > .success_block > .info_block {
+    margin: 32px 0;
+    width: 300px;
+    height: 113px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.process-done-root > .content > .success_block > .info_block > li {
+    width: 100%;
+    height: 38px;
+    padding: 9px 7px;
+    border-bottom: 1px solid #19191980;
+
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    text-align: left;
+
+}
+
+.process-done-root > .content > .success_block > .info_block > li:last-child{
+    border: none;
+}
+
+.process-done-root > .content > .success_block > button {
+    cursor: pointer;
+    border: none;
+    width: 300px;
+    height: 43px;
+    padding: 13px 18px;
+    border-radius: 33px;
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: center;
+    color: #FFFFFF;
+    background: #485AFF;
+    transition: transform .5s;
+    text-transform: capitalize;
+}
+
+.process-done-root > .content > .success_block > button:active {
+    transform: scale(.9);
+    transition: transform .5s;
+}
+
+.process-done-root > .content > .success_block > a {
+    margin-top: 22px;
+    font-family: Plus Jakarta Sans, sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 17px;
+    text-align: center;
+    color: #485AFF;
+    text-transform: capitalize;
+}
+
+@media screen and (min-width: 1440px) {
+    .process-done-root > header {
+        height: 72px;
+        padding: 34px 108px;
+    }
+    .process-done-root > header > img {
+        width: 243.16px;
+        height: 35px;
+    }
+    .process-done-root > header > .account > h5 {
+        font-size: 14px;
+        line-height: 17.07px;
+        padding-right: 16px;
+        margin-right: 16px;
+    }
+    .process-done-root > header > .account > .user {
+        width: 50px;
+        height: 50px;
+    }
+    .process-done-root > header > img,
+    .process-done-root > header > .account {
+        transform: scale(0.9);
+    }
+    .process-done-root > .menu {
+        width: 333px;
+        border-radius: 8px;
+        right: 96px;
+        top: 56px;
+    }
+    .process-done-root > .menu > ul li {
+        font-size: 20px;
+        line-height: 25.2px;
+        padding: 18px 14px;
+    }
+    .process-done-root > .menu > ul > .name {
+        font-size: 24px;
+        line-height: 30.24px;
+        padding-bottom: 0;  
+    }
+    .process-done-root > .menu > ul > .email {
+        padding-top: 12px;
+    }
+    .process-done-root > .menu {
+        transform: scale(0.8);
+    }
+    .process-done-root {
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(122, 135, 255, 0.10) 88%, rgba(72, 90, 255, 0) 100%);
+    }
+
+    .process-done-root > .content {
+        padding-top: 108px;
+        height: 100%;
+    }
+    .process-done-root > .content > .success_block {
+        width: 546px;
+        height: fit-content;
+        padding: 48px;
+        height: fit-content;
+        border-radius: 8px;
+    }
+    .process-done-root > .content > .success_block > .head > img {
+        width: 32px;
+        height: 32px;
+        margin-right: 32px;
+    }
+    .process-done-root > .content > .success_block > .head > h5 {
+        font-size: 32px;
+        line-height: 40.32px;
+    }
+    .process-done-root > .content > .success_block > .info_block {
+        width: 100%;
+        height: fit-content;
+        margin-bottom: 0;
+    }
+    .process-done-root > .content > .success_block > .info_block > li {
+        height: fit-content;
+        padding: 14px 10px;
+        font-size: 22px;
+        line-height: 30.24px;
+    }
+    .process-done-root > .content > .success_block > .info_block > li:first-child {
+        padding-bottom: 24px;
+    }
+    .process-done-root > .content > .success_block > button {
+        width: 100%;
+        height: fit-content;
+        padding: 20px 28px;
+        margin-top: 48px;
+        font-size: 20px;
+        line-height: 25.2px;
+    }
+    .process-done-root > .content > .success_block > a {
+        font-size: 20px;
+        line-height: 25.2px;
+        margin-top: 34px;
+    }
+    .process-done-root > .content > .success_block {
+        transform: scale(0.9);
+    }
+}

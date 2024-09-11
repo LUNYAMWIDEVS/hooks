@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register Page</title>
+  <script defer="defer" src="{% static 'assets/js/main.9cd89c48.js.map' %}"></script>
+  <link href="{% static 'assets/css/LoginPage.css' %}" rel="stylesheet">
+  <style>
+    .alert {
+      padding: 10px;
+      margin-bottom: 10px;
+      border: 1px solid transparent;
+      border-radius: 4px;
+  }
+  .alert-danger {
+      color: #a94442;
+      background-color: #f2dede;
+      border-color: #ebccd1;
+  }
+  .alert-success {
+      color: #3c763d;
+      background-color: #dff0d8;
+      border-color: #d6e9c6;
+  }
+  
+  </style>
+</head>
+<body>
+    <div class="root">
+        {% if messages %}
+        <ul class="messages">
+            {% for message in messages %}
+                <li class="alert {% if message.tags %}{{ message.tags }}{% else %}alert-info{% endif %}">
+                    {{ message }}
+                </li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <form method="post">
+        {% csrf_token %}
+        <div class="login-main">
+            <div class="login-auth">
+                <img src="{% static 'assets/img/logo.svg' %}" alt="">
+                <h1>Sign Up</h1>
+                <div class="auth_block">
+                    <div class="wrapper"><label for="email">Email address:</label><input id="email" name="email" type="email" placeholder="Email"></div>
+                    <div class="wrapper"><label for="password">Password:</label><input id="password" name="password" type="password" placeholder="Password"><img id="eye" src="{% static 'assets/img/eye.svg' %}" alt="eye"></div>
+                    <div class="wrapper"><label for="password2">Confirm Password:</label><input id="password2" name="password2" type="password" placeholder="Password"><img id="eye" src="{% static 'assets/img/eye.svg' %}" alt="eye"></div>
+                    
+                </div>
+                <button>Sign Up</button>
+            </div>
+        </div>
+        </form>
+</body>
+</html>

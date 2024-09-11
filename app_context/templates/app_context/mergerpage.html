@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Merger</title>
+    <link href="{% static 'assets/css/main.8ac7ceda.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div id="root">
+        <div class="merger-root">
+            <header>
+                <img src="{% static 'assets/img/white_logo.svg' %}" alt="logo" style="cursor: pointer;">
+                <div class="account">
+                    <h5>Credits Remaining: 10</h5>
+                    <div class="user" id="menuButton"><img src="{% static 'assets/img/user.svg' %}" alt="user"></div>
+                </div>
+            </header>
+            <div class="menu" id="menu" style="display: none;">
+                <ul>
+                    <li class="name">Olivia Rhye</li>
+                    <li class="email">olivia@example.com</li>
+                    <li>View profile</li>
+                    <li>Credit left <span>50</span></li>
+                    <li>Setting</li>
+                    <li><a href="{% url 'logout' %}">Log out</a></li>
+                </ul>
+            </div>
+            <div class="content">
+                <div class="video_manager">
+                    <h1>Video Merger</h1>
+                    <form class="merger_input_block">
+                        <div class="upload_file_wrapper">
+                            <h4>Upload Your Hooks: <span>(Maximum 10)</span></h4>
+                            <label for="hooks"><span class="button"><img src="{% static 'assets/img/upload_gray.svg' %}" alt="upload">Choose file</span></label><input id="hooks" type="file" accept="video/mp4,video/x-m4v,video/*" multiple="">
+                        </div>
+                        <div class="upload_file_wrapper">
+                            <h4>Upload Your Video: <span>(Maximum 1)</span></h4>
+                            <label for="video"><span class="button"><img src="{% static 'assets/img/upload_gray.svg' %}" alt="upload">Choose file</span></label><input id="video" type="file" accept="video/mp4,video/x-m4v,video/*">
+                        </div>
+                        <button type="submit">Upload and process</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        document.getElementById("menuButton").addEventListener("click", function() {
+            var menu = document.getElementById("menu");
+            if (menu.style.display === "none") {
+                menu.style.display = "block";
+            } else {
+                menu.style.display = "none";
+            }
+        });
+    </script>
+</body>
+</html>

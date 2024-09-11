@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download Output Files</title>
+</head>
+<body>
+    <h1>Download Output Files</h1>
+    {% if message %}
+        <p>Message: {{ message }}</p>
+    {% elif error %}
+        <p>Error: {{ error }}</p>
+    {% endif %}
+</body>
+</html>
