@@ -145,7 +145,7 @@ def downloadall(request):
     try:
         # Get the task ID from the request
         post_data = request.POST.copy()
-        task_id = post_data.get('task_id','hooks-0') 
+        task_id = post_data.get('task_id','hooks-0')                
         
         if not task_id:
             print("no task id")
