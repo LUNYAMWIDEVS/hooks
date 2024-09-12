@@ -22,6 +22,11 @@ from moviepy.editor import AudioFileClip
 from PIL import Image
 from threading import Lock
 from .models import HookContent
+from moviepy.config import change_settings
+
+# Set the path to the ImageMagick binary (change to your actual path)
+change_settings({"IMAGEMAGICK_BINARY": "magick"})
+
 canceled_tasks = set()
 API_KEY = 'AIzaSyBbU9f0mhNDZsUewCnyXHeUwSAtcbZSd_M'  # Replace this with your updated API key
 
@@ -707,6 +712,52 @@ def crop_to_aspect_ratio(video_clip, target_width, target_height):
     
     return cropped_clip
 
+import colorgram
+from PIL import Image
+
+x11_color_names = {
+    "red": (255, 0, 0),
+    "green": (0, 255, 0),
+    "blue": (0, 0, 255),
+    # ... other X11 color names and their RGB values
+}
+
+def rgb_to_color_name(rgb_tuple):
+    """
+    Converts an RGB color tuple to its closest X11 color name.
+
+    Args:
+        rgb_tuple: A tuple representing the RGB color values (r, g, b).
+
+    Returns:
+        The closest X11 color name to the given RGB tuple, or None if no close match is found.
+    """
+
+    try:
+        # Create an image from the RGB tuple
+        image = Image.new("RGB", (1, 1), rgb_tuple)
+
+        # Extract the color from the image
+        palette = colorgram.extract(image, 1)
+        color_rgb = palette[0].rgb
+
+        # Find the closest X11 color name
+        closest_name = None
+        closest_distance = float('inf')
+        for name, color in x11_color_names.items():
+            distance = sum((a - b) ** 2 for a, b in zip(color_rgb, color))
+            if distance < closest_distance:
+                closest_name = name
+                closest_distance = distance
+
+        return closest_name
+    except Exception as e:
+        print(f"Error converting RGB to color name: {e}")
+        return None
+
+# Example usage
+
+
 def create_custom_text_clip(hook_text, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, top_box_color, text_color, font_size, word_color_data):
     hook_text_parts = split_hook_text(hook_text)
     x_multiplier = OUT_VIDEO_WIDTH / 360
@@ -726,6 +777,7 @@ def create_custom_text_clip(hook_text, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, top_bo
     pango_text = ""
     words_in_first_part = hook_text_parts[0].split()
 
+    text_clips_ = []
     for word_data in word_color_data:
         for word_info in word_data:
             word = word_info['text'].capitalize()  # Capitalize the first letter of the word
@@ -733,27 +785,35 @@ def create_custom_text_clip(hook_text, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, top_bo
             # Only add the word to pango_text if it is in the first part
             if word in words_in_first_part:
                 color = word_info['color']
+                print(color,'------------>color')
 
                 # Override the color only if it's not black
                 if color == (0, 0, 0):
                     color = text_color  # Use the front-end color if the color is black
 
                 color_hex = "#{:02x}{:02x}{:02x}".format(*color)
-
+                # fontsize1 = 20
                 # Apply the font directly in Pango markup
+                
                 pango_text += f'<span font_desc="Mu Font {fontsize1}" foreground="{color_hex}">{word}</span> '
 
     print(f"Debug: Pango-formatted text: {pango_text}")
 
     # Create the text clip with Pango-formatted text for the first part
     # import pdb;pdb.set_trace()
+    # pango_text = '<span font_desc="Arial 30" foreground="#ff0000">This is a test</span>'
     try:
+        """
+        magick -background blue -gravity center -size 612x95 pango:'<span font_desc="Mu Font 30" foreground="#ffffff"><b>This</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>Is</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>How</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>I</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>Fixed</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>The</b></span> <span font_desc="Mu Font 30" foreground="#ffffff"><b>Non</b></span> <span font_desc="Mu Font 30" foreground="#ff0000"><b>Stop</b></span> <span font_desc="Mu Font 30" foreground="#ff0000"><b>Pain</b></span> <span font_desc="Mu Font 30" foreground="#ff0000"><b>In</b></span> <span font_desc="Mu Font 30" foreground="#ff0000"><b>My</b></span> <span font_desc="Mu Font 30" foreground="#ff0000"><b>Neck</b></span>' output.png
+        """
         text_clip1 = TextClip(
-            hook_text_parts[0],
+            # hook_text_parts[0],
             # pango_text.strip(),  # Pango-formatted string with word colors
+            filename='/tmp/output.txt',
             size=( max_width , None),
-            method='label',  # Enable Pango markup
-            font='Arial',
+            # size=(800,600),
+            method='pangocairo',  # Enable Pango markup
+            font='dependencies/fonts/mu.otf',
             fontsize=fontsize1,
             color='white',  # Default color, overridden by Pango markup
             align='center'
@@ -805,7 +865,10 @@ def create_custom_text_clip(hook_text, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, top_bo
         ], size=(OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT))
 
     # Clean up the temporary Fontconfig directory
-    shutil.rmtree(temp_fontconfig_dir)
+    try:
+        shutil.rmtree(temp_fontconfig_dir)
+    except Exception as err:
+        print(err)
 
     return final_clip
 
