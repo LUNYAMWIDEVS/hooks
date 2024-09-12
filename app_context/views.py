@@ -145,16 +145,17 @@ def downloadall(request):
     try:
         # Get the task ID from the request
         post_data = request.POST.copy()
-        task_id = post_data.get('task_id') 
+        task_id = post_data.get('task_id','hooks-0') 
         
         if not task_id:
-            return JsonResponse({"error": "Task ID is required"}, status=400)
+            print("no task id")
+            # return JsonResponse({"error": "Task ID is required"}, status=400)
             # messages.error(request, 'Task ID is required')
             # return jsonify({"error": "Task ID is required"}), 400
         temp_dir = cache.get(task_id)
         # Define the output folder where the videos are stored based on the task_id
-        output_videos_folder = f"/tmp/task_{task_id}_*/output/videos"
-        output_videos_folder = "/var/folders/s3/t33pq9yn2jj0yqnk4jkrt2jn4g8cft/T/task_task-iw3GDoCk4_jzs9tw0m/output/videos"
+        output_videos_folder = f"media/hooks_content/"
+        # output_videos_folder = "/var/folders/s3/t33pq9yn2jj0yqnk4jkrt2jn4g8cft/T/task_task-iw3GDoCk4_jzs9tw0m/output/videos"
 
         # Glob to match the task folder that may have random suffixes
         matching_folders = glob.glob(output_videos_folder)

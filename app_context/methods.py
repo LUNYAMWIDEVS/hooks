@@ -14,6 +14,7 @@ import random
 import string
 import threading
 import os
+import subprocess
 import shutil
 import glob
 from tqdm import tqdm
@@ -418,8 +419,9 @@ def process(params):
             if params['task_id'] in canceled_tasks:
                 return handle_task_cancellation(temp_dir, task_id)
 
+            print(os.path.join(output_audios_folder,row['Audio Filename']),'------------>audio file')
             try:
-                process_audio_on_videos(row, video_files_to_use, idx, input_df, hook_number, hook_text, num_videos_to_use, audio_clip, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, output_videos_folder, total_rows, task_id, top_box_color, default_text_color, word_color_data)
+                process_audio_on_videos(row, video_files_to_use, idx, input_df, hook_number, hook_text, num_videos_to_use, audio_clip, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, output_videos_folder, total_rows, task_id, top_box_color, default_text_color, word_color_data,audio_file=os.path.join(output_audios_folder,row['Audio Filename']))
             except Exception as err:
                 print(f"check on following---->{err}")
             current_thread_count = 0
@@ -430,6 +432,32 @@ def process(params):
             except Exception as err:
                 print('failed to join all hooks')
         print(f"Debug: Task {task_id} completed.")
+
+        # Load your video file
+        print(os.path.join(output_videos_folder, 'hook_0.mp4'),'------------>video file')
+        video = VideoFileClip(os.path.join(output_videos_folder, 'hook_0.mp4'))
+
+        # Load your audio file
+        audio = AudioFileClip(os.path.join(output_audios_folder,row['Audio Filename']))
+
+        # Set the audio to the video
+        video_with_audio = video.set_audio(audio)
+
+        # Export the final video
+        video_with_audio.write_videofile("media/final_video.mp4", codec="libx264", audio_codec="aac")
+
+        v_file = os.path.join(output_videos_folder,'hook_0.mp4')
+        a_file = os.path.join(output_audios_folder,row['Audio Filename'])
+        command = [
+            'ffmpeg',
+            '-i', v_file,
+            '-i', a_file,
+            '-c:v', 'copy',
+            '-c:a', 'aac',
+            '-strict', 'experimental',
+            'media/hooks_content/final_video_test.mp4'
+        ]
+        subprocess.run(command)
 
     except Exception as e:
         print(f"Error during processing: {e}")
@@ -567,7 +595,7 @@ def handle_task_cancellation(temp_dir, task_id):
     delete_temp_dir(temp_dir)
     # socketio.emit('task_cancelled', {'task_id': task_id})
 
-def process_audio_on_videos(row, video_files, idx, input_df, hook_number, hook_text, num_videos_to_use, audio_clip, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, output_videos_folder, total_rows, task_id, top_box_color, default_text_color, word_color_data):
+def process_audio_on_videos(row, video_files, idx, input_df, hook_number, hook_text, num_videos_to_use, audio_clip, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, output_videos_folder, total_rows, task_id, top_box_color, default_text_color, word_color_data,audio_file=None):
     # Remove underscores from the hook text for display
     cleaned_hook_text = hook_text.replace('_', '')
     # import pdb;pdb.set_trace()
@@ -579,6 +607,7 @@ def process_audio_on_videos(row, video_files, idx, input_df, hook_number, hook_t
     video_clips = []
 
     for considered_vid in video_files:
+        # import  pdb;pdb.set_trace()
         video_clip = VideoFileClip(considered_vid).subclip(0, each_video_duration)
         
         # Apply cropping to maintain aspect ratio without distortion
@@ -607,8 +636,9 @@ def process_audio_on_videos(row, video_files, idx, input_df, hook_number, hook_t
     ]).set_audio(audio_clip).set_duration(audio_clip.duration)
 
     output_video_filename = os.path.join(output_videos_folder, f'hook_{idx}.mp4')
-
-    final_clip.write_videofile(output_video_filename, temp_audiofile=os.path.join(output_videos_folder, f"temp-audio_{idx}.m4a"), remove_temp=True, codec='libx264', audio_codec="aac")
+    print(output_videos_folder,'---------->output_videos_folder')
+    final_clip.write_videofile(output_video_filename, temp_audiofile=os.path.join(output_videos_folder, f"temp-audio_{idx}.m4a"), remove_temp=False, codec='libx264', audio_codec="aac")
+    # final_clip.write_videofile(output_video_filename, audio=audio_file, remove_temp=True, codec='libx264', audio_codec="aac")
     # import pdb;pdb.set_trace()
     # Emit video link after processing
     # socketio.emit('video_link', {'task_id': task_id, 'video_link': f"/download_output?video_path={output_video_filename}", 'file_name': os.path.basename(output_video_filename)})
@@ -716,7 +746,7 @@ def create_custom_text_clip(hook_text, OUT_VIDEO_WIDTH, OUT_VIDEO_HEIGHT, top_bo
     print(f"Debug: Pango-formatted text: {pango_text}")
 
     # Create the text clip with Pango-formatted text for the first part
-    import pdb;pdb.set_trace()
+    # import pdb;pdb.set_trace()
     try:
         text_clip1 = TextClip(
             hook_text_parts[0],
